@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Your Account — Scorecard.pk</title>
+<style>
+  :root{
+    --blue-dark:#0b3d91;
+    --blue:#1a56db;
+    --blue-light:#e8f0fe;
+    --white:#ffffff;
+    --text:#1f2937;
+    --muted:#5b6472;
+    --border:#dbe4f5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text);
+    background:var(--white);
+    line-height:1.7;
+  }
+  header{background:var(--blue-dark);color:var(--white);padding:16px 20px;}
+  .header-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;}
+  .header-inner .logo{
+    width:40px;height:40px;border-radius:10px;background:var(--white);color:var(--blue-dark);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;
+  }
+  .header-inner .brand{font-weight:700;font-size:18px;}
+  main{max-width:720px;margin:0 auto;padding:40px 20px;}
+  h1{color:var(--blue-dark);font-size:26px;margin-bottom:16px;}
+  h2{color:var(--blue);font-size:18px;margin-top:28px;margin-bottom:8px;}
+  p{color:var(--text);margin-bottom:12px;}
+  ul{margin:0 0 12px 20px;color:var(--text);}
+  li{margin-bottom:6px;}
+  .box{
+    background:var(--blue-light);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin:20px 0;
+  }
+  .steps{counter-reset:step;list-style:none;margin-left:0;}
+  .steps li{
+    counter-increment:step;
+    position:relative;
+    padding-left:36px;
+    margin-bottom:14px;
+  }
+  .steps li::before{
+    content:counter(step);
+    position:absolute;left:0;top:0;
+    width:24px;height:24px;
+    background:var(--blue);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;
+  }
+  a.email-btn{
+    display:inline-block;
+    background:var(--blue);
+    color:var(--white);
+    font-weight:700;
+    padding:12px 24px;
+    border-radius:10px;
+    margin-top:8px;
+  }
+  footer{
+    text-align:center;
+    padding:24px 20px;
+    color:var(--muted);
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">S</div>
+      <div class="brand">Scorecard.pk</div>
+    </div>
+  </header>
+
+  <main>
+    <h1>Request Account Deletion</h1>
+    <p>
+      If you have created an account in the Scorecard.pk app and would like your account
+      and associated data permanently deleted, follow the steps below. You do not need to
+      have the app installed to make this request.
+    </p>
+
+    <div class="box">
+      <h2 style="margin-top:0;">How to request deletion</h2>
+      <ol class="steps">
+        <li>Message us on WhatsApp at <strong>[PUT YOUR WHATSAPP NUMBER HERE, e.g. +92 334 5883456]</strong> using the button below.</li>
+        <li>Tell us the phone number, email, or username associated with your Scorecard.pk account so we can locate it.</li>
+        <li>We will verify your request and permanently delete your account within [PUT NUMBER, e.g. 7] business days.</li>
+        <li>You will receive a confirmation message on WhatsApp once your account and data have been deleted.</li>
+      </ol>
+      <a href="https://wa.me/923345883456?text=Hi%2C%20I%20would%20like%20to%20request%20deletion%20of%20my%20Scorecard.pk%20account." class="email-btn">Message us on WhatsApp to delete my account</a>
+    </div>
+
+    <h2>What gets deleted</h2>
+    <ul>
+      <li>Your account profile and login credentials</li>
+      <li>Saved matches, scorecards, and tournament history linked to your account</li>
+      <li>Player statistics tied to your profile</li>
+    </ul>
+
+    <h2>What may be retained</h2>
+    <p>
+      [PUT YOUR ACTUAL RETENTION PRACTICES HERE — e.g.] We may retain limited, anonymized
+      data (such as aggregate match statistics that do not identify you) for analytics purposes.
+      Any data required to comply with legal obligations, prevent fraud, or resolve disputes
+      may be retained for [PUT TIME PERIOD] as described in our
+      <a href="privacy-policy.html">Privacy Policy</a>.
+    </p>
+
+    <h2>Timeframe</h2>
+    <p>Deletion requests are typically processed within [PUT NUMBER] business days of verification.</p>
+  </main>
+
+  <footer>
+    &copy; 2026 Scorecard.pk. All rights reserved. ·
+    <a href="privacy-policy.html">Privacy Policy</a>
+  </footer>
+
+</body>
+</html>
