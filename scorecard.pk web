@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scorecard.pk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a black scoreboard page. Wordmark bar, hero with the app button beside a sample score table, then account help links and their instructions. */
+:root {
+  --bg: #070a08;
+  --surface: #0e1511;
+  --line: #1f2b24;
+  --fg: #e9f1ec;
+  --muted: #8fa396;
+  --green: #2ee57a;
+  --green-ink: #04140a;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 1040px; margin-inline: auto; }
+a { color: var(--green); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; border-bottom: 1px solid var(--line); }
+.mark { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--fg); text-decoration: none; }
+.mark span { color: var(--green); }
+.bar nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.9rem; }
+.bar nav a { color: var(--muted); text-decoration: none; }
+.bar nav a:hover { color: var(--green); }
+
+.hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; padding-block: 64px 56px; }
+.hero > * { min-width: 0; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); margin: 0 0 16px; }
+h1 { font-size: clamp(2.4rem, 7vw, 4.4rem); line-height: 1; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 20px; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--green); }
+.lede { color: var(--muted); max-width: 46ch; margin: 0 0 32px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: var(--green-ink); font-weight: 800; text-decoration: none; padding: 14px 24px; border-radius: 4px; }
+.btn:hover { filter: brightness(1.08); }
+.btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.board { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }
+.board-head { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+th, td { padding: 10px 8px; text-align: right; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; }
+th { font-weight: 400; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+tr.lead td { color: var(--green); font-weight: 500; }
+tr:last-child td { border-bottom: 0; }
+
+.help { padding-block: 24px 8px; }
+h2 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0 0 8px; }
+.sub { color: var(--muted); margin: 0 0 24px; max-width: 56ch; }
+.links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.link { display: flex; flex-direction: column; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px; text-decoration: none; color: var(--fg); min-width: 0; }
+.link:hover { border-color: var(--green); }
+.link strong { font-size: 1.05rem; }
+.link span { color: var(--muted); font-size: 0.92rem; }
+.link .go { font-family: var(--font-mono); font-size: 0.8rem; color: var(--green); margin-top: 8px; }
+
+.panel { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 40px; display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; scroll-margin-top: 16px; }
+.panel > * { min-width: 0; }
+.panel h2 { margin: 0; }
+.panel ol { margin: 0 0 20px; padding-left: 1.2em; display: grid; gap: 8px; max-width: 60ch; }
+.panel li::marker { color: var(--green); font-family: var(--font-mono); }
+.panel p { margin: 0 0 16px; max-width: 60ch; color: var(--muted); }
+.mail { font-family: var(--font-mono); background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 2px 8px; color: var(--fg); overflow-wrap: anywhere; }
+
+footer { border-top: 1px solid var(--line); margin-top: 64px; padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 0.88rem; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 36px; padding-block: 40px; }
+  .links { grid-template-columns: 1fr; }
+  .panel { grid-template-columns: 1fr; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="#top">scorecard<span>.pk</span></a>
+    <nav aria-label="Primary">
+      <a href="#help">Account help</a>
+      <a href="#reset">Forgot password</a>
+      <a href="#delete">Delete account</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Android app</p>
+        <h1>Every score, <em>settled.</em></h1>
+        <p class="lede">Scorecard.pk keeps your scores in one place on your phone. Download it from Google Play, or use the links below to manage your account.</p>
+        <a class="btn" id="play-link" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6v18.8a1 1 0 0 0 1.5.9l15-9.4a1 1 0 0 0 0-1.7L5.5 1.7A1 1 0 0 0 4 2.6z"/></svg>
+          Get it on Google Play
+        </a>
+      </div>
+
+      <div class="board" role="img" aria-label="Sample scorecard with three players and four rounds">
+        <div class="board-head"><span>Sample scorecard</span><span>4 rounds</span></div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Player</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>Total</th></tr></thead>
+            <tbody>
+              <tr class="lead"><td>Ali</td><td>42</td><td>38</td><td>51</td><td>47</td><td>178</td></tr>
+              <tr><td>Hamza</td><td>35</td><td>44</td><td>40</td><td>45</td><td>164</td></tr>
+              <tr><td>Sana</td><td>30</td><td>36</td><td>41</td><td>39</td><td>146</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="help" id="help">
+      <h2>Account help</h2>
+      <p class="sub">The quickest routes to the things people ask for most.</p>
+      <div class="links">
+        <a class="link" id="app-link" href="#" target="_blank" rel="noopener">
+          <strong>Download the app</strong>
+          <span>Install Scorecard.pk from the Google Play Store.</span>
+          <span class="go">Open Google Play →</span>
+        </a>
+        <a class="link" id="reset-link" href="#reset">
+          <strong>Forgot password</strong>
+          <span>Get back into your account.</span>
+          <span class="go">See how →</span>
+        </a>
+        <a class="link" id="delete-link" href="#delete">
+          <strong>Delete account</strong>
+          <span>Ask us to remove your account and its data.</span>
+          <span class="go">See how →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="panel" id="reset">
+      <h2>Forgot your password</h2>
+      <div>
+        <ol>
+          <li>Open the Scorecard.pk app and go to the sign-in screen.</li>
+          <li>Tap <strong>Forgot password</strong>.</li>
+          <li>Enter the email address you signed up with.</li>
+          <li>Follow the instructions in the message we send you to choose a new password.</li>
+        </ol>
+        <p>If no message arrives within a few minutes, check your spam folder, then contact us at <span class="mail" data-mail>our support email</span>.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="delete">
+      <h2>Delete your account</h2>
+      <div>
+        <ol>
+          <li>Send a request to <span class="mail" data-mail>our support email</span> from the email address registered to your account.</li>
+          <li>Use the subject line <strong>Delete my account</strong>.</li>
+          <li>We confirm the request and remove your account and the data linked to it.</li>
+        </ol>
+        <p>Deleting an account cannot be undone. Uninstalling the app on its own does not delete your account.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year">2026</span> Scorecard.pk</span>
+    <a href="#top">Back to top</a>
+  </footer>
+</div>
+
+<script>
+/* Edit these three values to point at the real destinations. */
+var CONFIG = {
+  playUrl: "https://play.google.com/store/search?q=scorecard.pk&c=apps",
+  supportEmail: "",
+  deleteUrl: ""
+};
+
+document.getElementById("play-link").href = CONFIG.playUrl;
+document.getElementById("app-link").href = CONFIG.playUrl;
+if (CONFIG.deleteUrl) {
+  var d = document.getElementById("delete-link");
+  d.href = CONFIG.deleteUrl; d.target = "_blank"; d.rel = "noopener";
+}
+if (CONFIG.supportEmail) {
+  var nodes = document.querySelectorAll("[data-mail]");
+  for (var i = 0; i < nodes.length; i++) nodes[i].textContent = CONFIG.supportEmail;
+}
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
